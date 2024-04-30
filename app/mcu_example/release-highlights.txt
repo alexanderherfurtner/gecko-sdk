@@ -1,0 +1,3 @@
+
+What's new in this MCU SDK release:
+  * Added Simplicity Studio support for SLSTK3402A_EFM32PG12 examples.
