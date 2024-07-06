@@ -3996,7 +3996,7 @@ bool CMU_OscillatorTuningOptimize(CMU_Osc_TypeDef osc,
       {
         return CMU_OscillatorTuningWait(osc, mode);
       }
-
+      break;
     default:
       EFM_ASSERT(false);
   }
