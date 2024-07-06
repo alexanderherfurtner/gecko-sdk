@@ -2690,7 +2690,7 @@ void CMU_ClockSelectSet(CMU_Clock_TypeDef clock, CMU_Select_TypeDef ref)
       EFM_ASSERT(ref != cmuSelect_HFCLKLE);
 #endif
       /* Fall through and select clock source */
-
+      __attribute__((fallthrough));
     case CMU_LFECLKSEL_REG:
       selReg = (selReg == NULL) ? &CMU->LFECLKSEL : selReg;
 #if !defined( _CMU_LFECLKSEL_LFE_HFCLKLE )
@@ -2698,7 +2698,7 @@ void CMU_ClockSelectSet(CMU_Clock_TypeDef clock, CMU_Select_TypeDef ref)
       EFM_ASSERT(ref != cmuSelect_HFCLKLE);
 #endif
       /* Fall through and select clock source */
-
+      __attribute__((fallthrough));
     case CMU_LFBCLKSEL_REG:
       selReg = (selReg == NULL) ? &CMU->LFBCLKSEL : selReg;
       switch (ref)
