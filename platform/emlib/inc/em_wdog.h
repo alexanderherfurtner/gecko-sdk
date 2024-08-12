@@ -113,6 +113,20 @@ typedef enum
 } WDOG_WinSel_TypeDef;
 #endif
 
+#if defined( _WDOG_IEN_MASK )
+/** Watchdog interrupt enable/disable. */
+typedef enum
+{
+  wdogIntDisable = 0,            /**< Disable watchdog interrupts */
+  wdogIntTout = WDOG_IEN_TOUT,   /**< Enable watchdog timeout interrupt */
+  wdogIntWarn = WDOG_IEN_WARN,   /**< Enable watchdog warning interrupt */
+  wdogIntWin  = WDOG_IEN_WIN,    /**< Enable watchdog illegal window interrupt */
+  wdogIntPem0 = WDOG_IEN_PEM0,   /**< Enable watchdog PEM0 interrupt */
+  wdogIntPem1 = WDOG_IEN_PEM1,   /**< Enable watchdog PEM1 interrupt */
+  wdogIntAll  = _WDOG_IEN_MASK,  /**< Enable watchdog interrupts */
+} WDOG_IntEnable_TypeDef;
+#endif
+
 /*******************************************************************************
  *******************************   STRUCTS   ***********************************
  ******************************************************************************/
@@ -155,6 +169,11 @@ typedef struct
 #if defined( _WDOG_CTRL_WINSEL_MASK )
   /** Select illegal window time as % of the watchdog timeout */
   WDOG_WinSel_TypeDef    winSel;
+#endif
+
+#if defined( _WDOG_IEN_MASK )
+  /** Select watchdog interrupts. */
+  WDOG_IntEnable_TypeDef intSel;
 #endif
 
 #if defined( _WDOG_CTRL_WDOGRSTDIS_MASK )

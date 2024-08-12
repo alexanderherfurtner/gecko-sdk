@@ -215,6 +215,9 @@ void WDOGn_Init(WDOG_TypeDef *wdog, const WDOG_Init_TypeDef *init)
   while (wdog->SYNCBUSY & WDOG_SYNCBUSY_CTRL)
     ;
 
+#if defined( _WDOG_IEN_MASK )
+  wdog->IEN = ((uint32_t)(init->intSel) & _WDOG_IEN_MASK);
+#endif
   wdog->CTRL = setting;
 }
 
