@@ -1055,6 +1055,37 @@ __STATIC_INLINE void GPIO_SlewrateSet(GPIO_Port_TypeDef port,
 }
 #endif
 
+#if defined(_GPIO_P_CTRL_DINDIS_MASK)
+/***************************************************************************//**
+ * @brief
+ *   Set DIN disable for pins on a GPIO port.
+ *
+ * @param[in] port
+ *   The GPIO port to configure.
+ *
+ * @param[in] dindis
+ *   The DINDIS mode to configure for pins on this GPIO port.
+ *
+ * @param[in] dindisAlt
+ *   The DINDIS mode to configure for pins using alternate modes on this GPIO port.
+ ******************************************************************************/
+__STATIC_INLINE void GPIO_DinDisableSet(GPIO_Port_TypeDef port,
+                                        bool dindis,
+                                        bool dindisAlt)
+{
+  EFM_ASSERT(GPIO_PORT_VALID(port));
+
+  uint32_t boolVal = dindis ? 1 : 0;
+  uint32_t boolValAlt = dindisAlt ? 1 : 0;
+
+  GPIO->P[port].CTRL = (GPIO->P[port].CTRL
+                        & ~(_GPIO_P_CTRL_DINDIS_MASK
+                            | _GPIO_P_CTRL_DINDISALT_MASK))
+                       | (boolVal << _GPIO_P_CTRL_DINDIS_SHIFT)
+                       | (boolValAlt << _GPIO_P_CTRL_DINDISALT_SHIFT);
+}
+#endif
+
 /***************************************************************************//**
  * @brief
  *   Unlocks the GPIO configuration.
