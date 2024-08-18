@@ -416,6 +416,14 @@ typedef enum
 #define gpioDriveStrengthWeak     gpioDriveStrengthWeakAlternateWeak
 #endif
 
+#if defined (_GPIO_P_CTRL_SLEWRATE_MASK)
+/** GPIO port slew rate. */
+#define GPIO_Slewrate(a)          ( (((a) << _GPIO_P_CTRL_SLEWRATE_SHIFT) | _GPIO_P_CTRL_SLEWRATE_MASK) )
+#define GPIO_SlewrateAlt(a)       ( (((a) << _GPIO_P_CTRL_SLEWRATEALT_SHIFT) | _GPIO_P_CTRL_SLEWRATEALT_MASK) )
+
+#define GPIO_SlewrateDefault     _GPIO_P_CTRL_SLEWRATE_DEFAULT
+#endif
+
 /** Pin mode. For more details on each mode, please refer to the
  * reference manual. */
 typedef enum
