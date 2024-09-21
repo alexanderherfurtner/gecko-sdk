@@ -418,8 +418,14 @@ typedef enum
 
 #if defined (_GPIO_P_CTRL_SLEWRATE_MASK)
 /** GPIO port slew rate. */
-#define GPIO_Slewrate(a)          ( (((a) << _GPIO_P_CTRL_SLEWRATE_SHIFT) | _GPIO_P_CTRL_SLEWRATE_MASK) )
-#define GPIO_SlewrateAlt(a)       ( (((a) << _GPIO_P_CTRL_SLEWRATEALT_SHIFT) | _GPIO_P_CTRL_SLEWRATEALT_MASK) )
+#define GPIO_Slewrate0           0
+#define GPIO_Slewrate1           1
+#define GPIO_Slewrate2           2
+#define GPIO_Slewrate3           3
+#define GPIO_Slewrate4           4
+#define GPIO_Slewrate5           5
+#define GPIO_Slewrate6           6
+#define GPIO_Slewrate7           7
 
 #define GPIO_SlewrateDefault     _GPIO_P_CTRL_SLEWRATE_DEFAULT
 #endif
