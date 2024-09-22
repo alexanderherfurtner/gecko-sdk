@@ -226,7 +226,12 @@ void LDMA_StartTransfer(int ch,
   CORE_ENTER_ATOMIC();
 
   /* Enable channel interrupt. */
-  LDMA->IEN |= chMask;
+  if (transfer->ldmaDoneIfs)
+  {
+    LDMA->IEN |= chMask;
+  } else {
+    LDMA->IEN &= ~chMask;
+  }
 
   if (transfer->ldmaReqDis)
   {

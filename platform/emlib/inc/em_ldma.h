@@ -574,6 +574,7 @@ typedef struct
   uint8_t               ldmaCfgSrcIncSign;     /**< Source addr. increment sign.         */
   uint8_t               ldmaCfgDstIncSign;     /**< Dest. addr. increment sign.          */
   uint8_t               ldmaLoopCnt;           /**< Counter for looped transfers.        */
+  bool                  ldmaDoneIfs;           /**< Generate interrupt when done.        */
 } LDMA_TransferCfg_t;
 
 
@@ -595,11 +596,12 @@ typedef struct
  * @brief
  *   Generic DMA transfer configuration for memory to memory transfers.
  */
-#define LDMA_TRANSFER_CFG_MEMORY()              \
-{                                               \
-  0, 0, 0, 0, 0,                                \
-  false, false, ldmaCfgArbSlotsAs1,             \
-  ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos, 0 \
+#define LDMA_TRANSFER_CFG_MEMORY()               \
+{                                                \
+  0, 0, 0, 0, 0,                                 \
+  false, false, ldmaCfgArbSlotsAs1,              \
+  ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos, 0, \
+  false                                          \
 }
 
 /**
@@ -611,18 +613,19 @@ typedef struct
   0, 0, 0, 0, 0,                                \
   false, false, ldmaCfgArbSlotsAs1,             \
   ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos,   \
-  loopCnt                                       \
+  loopCnt, false                                \
 }
 
 /**
  * @brief
  *   Generic DMA transfer configuration for memory to/from peripheral transfers.
  */
-#define LDMA_TRANSFER_CFG_PERIPHERAL(signal)    \
-{                                               \
-  signal, 0, 0, 0, 0,                           \
-  false, false, ldmaCfgArbSlotsAs1,             \
-  ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos, 0 \
+#define LDMA_TRANSFER_CFG_PERIPHERAL(signal)     \
+{                                                \
+  signal, 0, 0, 0, 0,                            \
+  false, false, ldmaCfgArbSlotsAs1,              \
+  ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos, 0, \
+  false                                          \
 }
 
 /**
@@ -633,7 +636,7 @@ typedef struct
 {                                                             \
   signal, 0, 0, 0, 0,                                         \
   false, false, ldmaCfgArbSlotsAs1,                           \
-  ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos, loopCnt         \
+  ldmaCfgSrcIncSignPos, ldmaCfgDstIncSignPos, loopCnt, false  \
 }
 
 /**
