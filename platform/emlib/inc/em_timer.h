@@ -968,6 +968,86 @@ __STATIC_INLINE void TIMER_Unlock(TIMER_TypeDef *timer)
 }
 #endif
 
+#if defined(_TIMER_ROUTELOC0_MASK)
+/** Timer Route Location for CC */
+typedef enum {
+  timerRouteCC_LOC0 = _TIMER_ROUTELOC0_CC0LOC_LOC0, /**< Route CC to location 0 defined in ROUTE register. */
+  timerRouteCC_LOC1 = _TIMER_ROUTELOC0_CC0LOC_LOC1, /**< Route CC to location 1 defined in ROUTE register. */
+  timerRouteCC_LOC2 = _TIMER_ROUTELOC0_CC0LOC_LOC2, /**< Route CC to location 2 defined in ROUTE register. */
+  timerRouteCC_LOC3 = _TIMER_ROUTELOC0_CC0LOC_LOC3, /**< Route CC to location 3 defined in ROUTE register. */
+  timerRouteCC_LOC4 = _TIMER_ROUTELOC0_CC0LOC_LOC4, /**< Route CC to location 4 defined in ROUTE register. */
+  timerRouteCC_LOC5 = _TIMER_ROUTELOC0_CC0LOC_LOC5, /**< Route CC to location 5 defined in ROUTE register. */
+  timerRouteCC_LOC6 = _TIMER_ROUTELOC0_CC0LOC_LOC6, /**< Route CC to location 6 defined in ROUTE register. */
+  timerRouteCC_LOC7 = _TIMER_ROUTELOC0_CC0LOC_LOC7, /**< Route CC to location 7 defined in ROUTE register. */
+  timerRouteCC_LOC8 = _TIMER_ROUTELOC0_CC0LOC_LOC8, /**< Route CC to location 8 defined in ROUTE register. */
+  timerRouteCC_LOC9 = _TIMER_ROUTELOC0_CC0LOC_LOC9, /**< Route CC to location 9 defined in ROUTE register. */
+  timerRouteCC_LOC10 = _TIMER_ROUTELOC0_CC0LOC_LOC10, /**< Route CC to location 10 defined in ROUTE register. */
+  timerRouteCC_LOC11 = _TIMER_ROUTELOC0_CC0LOC_LOC11, /**< Route CC to location 11 defined in ROUTE register. */
+  timerRouteCC_LOC12 = _TIMER_ROUTELOC0_CC0LOC_LOC12, /**< Route CC to location 12 defined in ROUTE register. */
+  timerRouteCC_LOC13 = _TIMER_ROUTELOC0_CC0LOC_LOC13, /**< Route CC to location 13 defined in ROUTE register. */
+  timerRouteCC_LOC14 = _TIMER_ROUTELOC0_CC0LOC_LOC14, /**< Route CC to location 14 defined in ROUTE register. */
+  timerRouteCC_LOC15 = _TIMER_ROUTELOC0_CC0LOC_LOC15, /**< Route CC to location 15 defined in ROUTE register. */
+  timerRouteCC_LOC16 = _TIMER_ROUTELOC0_CC0LOC_LOC16, /**< Route CC to location 16 defined in ROUTE register. */
+  timerRouteCC_LOC17 = _TIMER_ROUTELOC0_CC0LOC_LOC17, /**< Route CC to location 17 defined in ROUTE register. */
+  timerRouteCC_LOC18 = _TIMER_ROUTELOC0_CC0LOC_LOC18, /**< Route CC to location 18 defined in ROUTE register. */
+  timerRouteCC_LOC19 = _TIMER_ROUTELOC0_CC0LOC_LOC19, /**< Route CC to location 19 defined in ROUTE register. */
+  timerRouteCC_LOC20 = _TIMER_ROUTELOC0_CC0LOC_LOC20, /**< Route CC to location 20 defined in ROUTE register. */
+  timerRouteCC_LOC21 = _TIMER_ROUTELOC0_CC0LOC_LOC21, /**< Route CC to location 21 defined in ROUTE register. */
+  timerRouteCC_LOC22 = _TIMER_ROUTELOC0_CC0LOC_LOC22, /**< Route CC to location 22 defined in ROUTE register. */
+  timerRouteCC_LOC23 = _TIMER_ROUTELOC0_CC0LOC_LOC23, /**< Route CC to location 23 defined in ROUTE register. */
+  timerRouteCC_LOC24 = _TIMER_ROUTELOC0_CC0LOC_LOC24, /**< Route CC to location 24 defined in ROUTE register. */
+  timerRouteCC_LOC25 = _TIMER_ROUTELOC0_CC0LOC_LOC25, /**< Route CC to location 25 defined in ROUTE register. */
+  timerRouteCC_LOC26 = _TIMER_ROUTELOC0_CC0LOC_LOC26, /**< Route CC to location 26 defined in ROUTE register. */
+  timerRouteCC_LOC27 = _TIMER_ROUTELOC0_CC0LOC_LOC27, /**< Route CC to location 27 defined in ROUTE register. */
+  timerRouteCC_LOC28 = _TIMER_ROUTELOC0_CC0LOC_LOC28, /**< Route CC to location 28 defined in ROUTE register. */
+  timerRouteCC_LOC29 = _TIMER_ROUTELOC0_CC0LOC_LOC29, /**< Route CC to location 29 defined in ROUTE register. */
+  timerRouteCC_LOC30 = _TIMER_ROUTELOC0_CC0LOC_LOC30, /**< Route CC to location 30 defined in ROUTE register. */
+  timerRouteCC_LOC31 = _TIMER_ROUTELOC0_CC0LOC_LOC31  /**< Route CC to location 31 defined in ROUTE register. */
+} TIMER_RouteCC_TypeDef;
+#endif
+
+#if defined(_TIMER_ROUTELOC0_MASK) && defined (_TIMER_ROUTEPEN_MASK)
+/***************************************************************************//**
+ * @brief
+ *   Set the Timer Route Location for CC channel
+ *
+ * @param[in] timer
+ *   Pointer to TIMER peripheral register block.
+ *
+ * @param[in] ch
+ *   Compare/capture channel to access.
+ *
+ * @param[in] route
+ *   Route Location to set for the channel
+ ******************************************************************************/
+__STATIC_INLINE void TIMER_RouteCCSet(TIMER_TypeDef *timer, unsigned int ch,
+                                      TIMER_RouteCC_TypeDef route)
+{
+  EFM_ASSERT(TIMER_REF_VALID(timer));
+
+  timer->ROUTELOC0 |= ((unsigned int)route << (ch * 8));
+  timer->ROUTEPEN  |= (1 << ch);
+}
+
+/***************************************************************************//**
+ * @brief
+ *   Set the Timer Route Location for CC channels
+ *
+ * @param[in] timer
+ *   Pointer to TIMER peripheral register block.
+ *
+ * @param[in] ch
+ *   Compare/capture channel to access.
+ ******************************************************************************/
+__STATIC_INLINE void TIMER_RouteCCClr(TIMER_TypeDef *timer, unsigned int ch)
+{
+  EFM_ASSERT(TIMER_REF_VALID(timer));
+
+  timer->ROUTELOC0 &= ~(_TIMER_ROUTELOC0_CC0LOC_MASK << (ch * 8));
+  timer->ROUTEPEN  &= ~(1 << ch);
+}
+#endif
+
 /** @} (end addtogroup TIMER) */
 /** @} (end addtogroup emlib) */
 
