@@ -37,6 +37,7 @@
 #if defined(TIMER_COUNT) && (TIMER_COUNT > 0)
 
 #include <stdbool.h>
+#include "em_cmu.h"
 #include "em_assert.h"
 
 #ifdef __cplusplus
@@ -1047,6 +1048,36 @@ __STATIC_INLINE void TIMER_RouteCCClr(TIMER_TypeDef *timer, unsigned int ch)
   timer->ROUTEPEN  &= ~(1 << ch);
 }
 #endif
+
+/***************************************************************************//**
+ * @brief
+ *  Get the current TIMER clock frequency
+ *
+ * @param[in] timer
+ *   Pointer to TIMER peripheral register block.
+ *
+ ******************************************************************************/
+__STATIC_INLINE uint32_t TIMER_ClockFreqGet(TIMER_TypeDef *timer)
+{
+  EFM_ASSERT(TIMER_REF_VALID(timer));
+
+  if (timer == TIMER0)
+  {
+    return CMU_ClockFreqGet(cmuClock_TIMER0) / (1 << ((timer->CTRL &
+      _TIMER_CTRL_PRESC_MASK) >> _TIMER_CTRL_PRESC_SHIFT));
+  }
+#if defined(TIMER1)
+  else if (timer == TIMER1)
+  {
+    return CMU_ClockFreqGet(cmuClock_TIMER1) / (1 << ((timer->CTRL &
+      _TIMER_CTRL_PRESC_MASK) >> _TIMER_CTRL_PRESC_SHIFT));
+  }
+#endif
+  else
+  {
+    return 0;
+  }
+}
 
 /** @} (end addtogroup TIMER) */
 /** @} (end addtogroup emlib) */
