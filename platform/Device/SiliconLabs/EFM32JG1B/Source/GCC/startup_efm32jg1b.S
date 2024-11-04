@@ -138,6 +138,57 @@ Reset_Handler:
     blx     r0
 #endif
 
+/*
+ *  Clear the RAM regions defined by the linker script. This is done before
+ *  copying the data sections from ROM to RAM. Helps to avoid glitches.
+ */
+#ifdef __STARTUP_CLEAR_RAM_MUTIPLE
+    /*
+     * Multiple region scheme
+     *
+     * Between symbol address __info_table_ram_start__ and __info_table_ram_end__,
+     * there are array of tuples specifying:
+     * offset 0: Start of a RAM region
+     * offset 4: Length of the RAM region
+     *
+     *  All addresses must be aligned to 4 bytes boundary.
+     */
+    ldr     r3, =__info_table_ram_start__
+    ldr     r4, =__info_table_ram_end__
+
+.L_loop:
+    cmp     r3, r4
+    bge     .L_loop_done
+    ldr     r1, [r3]
+    ldr     r2, [r3, #4]
+    movs    r0, 0
+
+.L_loop_0:
+    subs    r2, #4
+    itt     ge
+    strge   r0, [r1, r2]
+    bge     .L_loop_0
+    adds    r3, #8
+    b       .L_loop
+.L_loop_done:
+#elif defined(__STARTUP_CLEAR_RAM)
+    /* Single region scheme
+     *
+     * The ranges of RAM to clear are specified by following symbols
+     *  __ram_start__: start of the RAM region to clear
+     *  __ram_end__: end of the RAM region to clear
+     */
+    ldr r0, =__ram_start
+    ldr r1, =__ram_end
+    movs r2, #0
+
+.L_loop:
+    cmp r0, r1
+    it lt
+    strlt r2, [r0], #4
+    blt .L_loop
+#endif
+
 /*  Firstly it copies data from read only memory to RAM. There are two schemes
  *  to copy. One can copy more than one sections. Another can only copy
  *  one section.  The former scheme needs more instructions and read-only
