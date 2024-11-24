@@ -65,7 +65,7 @@ static SPIDRV_Init_t        ezradioSpiInitData = SPIDRV_MASTER_USART1;
  */
 void ezradio_hal_GpioInit( GPIOINT_IrqCallbackPtr_t ezradioIrqCallback, bool enablePTI )
 {
-#if defined(_EZR32_HAPPY_FAMILY)
+#if defined(_EZR32_HAPPY_FAMILY) || defined(EZRADIODRV_DISABLE_PTI)
   (void)enablePTI;
 #endif
 
